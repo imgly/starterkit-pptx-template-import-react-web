@@ -32,7 +32,7 @@
  */
 
 import CreativeEngine from '@cesdk/engine';
-import { PPTXParser, addGoogleFontsAssetLibrary } from '@imgly/pptx-importer';
+import { PPTXParser, addGfontsAssetLibrary } from '@imgly/pptx-importer';
 import type { LogMessage } from '@imgly/pptx-importer';
 
 /**
@@ -101,7 +101,7 @@ export async function importPptxFile(
     });
 
     // Add Google Fonts support for better text rendering
-    await addGoogleFontsAssetLibrary(engine);
+    await addGfontsAssetLibrary(engine);
 
     // Convert Blob to ArrayBuffer
     const blobBuffer = await file.arrayBuffer();
