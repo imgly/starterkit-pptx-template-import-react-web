@@ -75,7 +75,13 @@ export async function initPptxTemplateImportEditor(cesdk: CreativeEditorSDK) {
   // Demo assets (templates, images)
   await cesdk.addPlugin(
     new DemoAssetSources({
-      include: ['ly.img.templates.*', 'ly.img.image.*']
+      include: [
+        'ly.img.image.*',
+        'ly.img.templates.blank.*',
+        'ly.img.templates.presentation.*',
+        'ly.img.templates.social.*',
+        'ly.img.templates.print.*'
+      ]
     })
   );
 

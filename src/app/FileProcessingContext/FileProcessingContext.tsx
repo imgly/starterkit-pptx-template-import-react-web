@@ -90,6 +90,7 @@ export function FileProcessingContextProvider({
 
         // Import PPTX file using the functional API
         const importResult = await importPptxFile(blob, fileName, {
+          license: editorConfig.license,
           baseURL: editorConfig.baseURL
         });
 
