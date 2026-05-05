@@ -32,13 +32,15 @@
  */
 
 import CreativeEngine from '@cesdk/engine';
-import { PPTXParser, addGoogleFontsAssetLibrary } from '@imgly/pptx-importer';
+import { PPTXParser, addGfontsAssetLibrary } from '@imgly/pptx-importer';
 import type { LogMessage } from '@imgly/pptx-importer';
 
 /**
  * Configuration options for PPTX import.
  */
 export interface PptxImportConfig {
+  /** CE.SDK license key */
+  license?: string;
   /** Base URL for CE.SDK assets (for local development) */
   baseURL?: string;
   /** Target width for preview image (default: 1000) */
@@ -90,18 +92,24 @@ export async function importPptxFile(
   fileName: string,
   config: PptxImportConfig = {}
 ): Promise<PptxImportResult> {
-  const { baseURL, previewWidth = 1000, previewHeight = 1000 } = config;
+  const {
+    license,
+    baseURL,
+    previewWidth = 1000,
+    previewHeight = 1000
+  } = config;
 
   let engine: CreativeEngine | null = null;
 
   try {
     // Initialize headless engine for processing
     engine = await CreativeEngine.init({
+      ...(license && { license }),
       ...(baseURL && { baseURL })
     });
 
     // Add Google Fonts support for better text rendering
-    await addGoogleFontsAssetLibrary(engine);
+    await addGfontsAssetLibrary(engine);
 
     // Convert Blob to ArrayBuffer
     const blobBuffer = await file.arrayBuffer();
