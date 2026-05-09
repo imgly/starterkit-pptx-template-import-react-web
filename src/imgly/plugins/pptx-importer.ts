@@ -17,7 +17,6 @@
  *
  * // Import a PPTX file
  * const result = await importPptxFile(pptxBlob, 'presentation.pptx', {
- *   baseURL: '/assets/'
  * });
  *
  * // Load into editor
@@ -81,7 +80,6 @@ export interface PptxImportResult {
  * @example
  * ```typescript
  * const result = await importPptxFile(pptxBlob, 'presentation.pptx', {
- *   baseURL: '/assets/'
  * });
  * console.log('Preview:', result.imageUrl);
  * console.log('Warnings:', result.messages.filter(m => m.type === 'warning'));
