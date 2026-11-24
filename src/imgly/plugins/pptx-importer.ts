@@ -42,10 +42,6 @@ export interface PptxImportConfig {
   license?: string;
   /** Base URL for CE.SDK assets (for local development) */
   baseURL?: string;
-  /** Target width for preview image (default: 1000) */
-  previewWidth?: number;
-  /** Target height for preview image (default: 1000) */
-  previewHeight?: number;
 }
 
 /**
@@ -68,7 +64,7 @@ export interface PptxImportResult {
  * This function:
  * 1. Initializes a headless CreativeEngine instance
  * 2. Parses the PPTX file using @imgly/pptx-importer
- * 3. Exports a preview image
+ * 3. Creates a preview image, which does not count as an export
  * 4. Saves the scene as an archive
  * 5. Returns URLs and parser messages
  *
@@ -90,12 +86,7 @@ export async function importPptxFile(
   fileName: string,
   config: PptxImportConfig = {}
 ): Promise<PptxImportResult> {
-  const {
-    license,
-    baseURL,
-    previewWidth = 1000,
-    previewHeight = 1000
-  } = config;
+  const { license, baseURL } = config;
 
   let engine: CreativeEngine | null = null;
 
@@ -129,12 +120,8 @@ export async function importPptxFile(
       throw new Error('No pages found in PPTX file');
     }
 
-    // Export preview image
-    const imageBlob = await engine.block.export(firstPage, {
-      mimeType: 'image/png',
-      targetWidth: previewWidth,
-      targetHeight: previewHeight
-    });
+    // A preview does not count as an export, unlike `engine.block.export`.
+    const imageBlob = await engine.block.exportPreview(firstPage);
 
     // Save the scene as an archive
     const sceneArchive = await engine.scene.saveToArchive();
